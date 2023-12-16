@@ -1,15 +1,18 @@
+import { LocalDate } from "@js-joda/core";
 import { FC } from "react";
 
 interface Parameters {
-  month: string;
+  days: LocalDate[];
 }
 
-const Month: FC<Parameters> = ({ month }) => {
+const Month: FC<Parameters> = ({ days }) => {
   return (
-    <h1 className="text-3xl font-bold underline">
-      {month}
-    </h1>
-  )
+    <>{days.map(day => (
+      <div className="text-xl font-bold">
+        {day.toString()}
+      </div>
+    ))
+    }</>);
 }
 
 export { Month };

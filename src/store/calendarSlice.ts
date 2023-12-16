@@ -1,19 +1,20 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 interface CalendarSlice {
-  currentMonth: string;
+  days: string[];
 }
 
 const initialState: CalendarSlice = {
-  currentMonth: "2023-10",
+  days: ['2012-12-24', '2012-12-25'],
 };
 
 export const calendarSlice = createSlice({
   name: "calendar",
   initialState,
   reducers: {
-    setMonth: (state: CalendarSlice, action: PayloadAction<string>) => {
-      state.currentMonth = action.payload;
+    setMonth: (state: CalendarSlice, action: PayloadAction<string[]>) => {
+      const payload = action.payload;
+      state.days = payload;
     },
   },
 });

@@ -1,12 +1,11 @@
+import { LocalDate } from "@js-joda/core";
 import { Month } from "./cal/Month";
 import { useAppSelector } from "./store/hooks";
 
 const App = () => {
-  const month = useAppSelector(store => store.calendar.currentMonth);
+  const days = useAppSelector(store => store.calendar.days).map(day => LocalDate.parse(day));
   return (
-    <h1 className="text-3xl font-bold underline">
-      <Month month={month} />
-    </h1>
+    <Month days={days} />
   )
 }
 
