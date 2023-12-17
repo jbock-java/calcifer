@@ -15,13 +15,21 @@ export const CalendarMonth: FC<Parameters> = ({ month }) => {
   const weeks = createWeeks(year, month);
   return (
     <>
-    <h1>{month.toString()}</h1>
-    {weeks.map(week => (
-      <div className="text-xl font-bold">
-        {JSON.stringify(week)}
+      <h1>{month.toString()}</h1>
+      <div className="font-mono w-fit grid gap-x-3 justify-items-end grid-cols-[auto_auto_auto_auto_auto_auto_auto]">
+        {weeks.map(week =>
+          renderWeek(week))}
       </div>
-    ))
-    }</>);
+    </>);
+}
+
+const renderWeek = (week: Week) => {
+  return (
+    <>
+      {week.days.map(day =>
+        <div>{day}</div>
+      )}
+    </>);
 }
 
 const createWeeks = (year: number, month: Month) => {
@@ -42,7 +50,7 @@ const createWeeks = (year: number, month: Month) => {
       }
     }
     if (anyDaysInWeek) {
-      result.push({days});
+      result.push({ days });
     } else {
       return result;
     }

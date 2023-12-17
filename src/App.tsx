@@ -1,4 +1,4 @@
-import { LocalDate, Month } from "@js-joda/core";
+import { Month } from "@js-joda/core";
 import { CalendarMonth } from "./cal/CalendarMonth";
 
 const App = () => {
