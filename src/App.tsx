@@ -1,14 +1,24 @@
 import { DayOfWeek, LocalDate, Month } from "@js-joda/core";
+import { useState } from "react";
 import { CalendarMonth } from "./cal/CalendarMonth";
 import { DataDay, DataMonth, Week } from "./model/types";
-import { useAppSelector } from "./store/hooks";
+import { calendarSlice } from "./store/calendarSlice";
+import { useAppDispatch, useAppSelector } from "./store/hooks";
 
 export const App = () => {
-  const year = useAppSelector(store => store.calendar.year);
+  const calendarData = useAppSelector(store => store.calendar.calendarData);
+  const year = calendarData.year;
+  const highlight = calendarData.highlight;
+  const [currentYear, setCurrentYear] = useState(String(year));
+  const [currentHighlight, setCurrentHighlight] = useState(highlight);
+  const dispatch = useAppDispatch();
   const months: DataMonth[] = createMonths(year);
   const updateHl = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("hi");
+    dispatch(calendarSlice.actions.setCalendarData({
+      year: Number(currentYear),
+      highlight: currentHighlight
+    }));
   }
   return (
     <div className="mx-8 mt-4 mb-32">
@@ -18,8 +28,15 @@ export const App = () => {
           month={month} />)
       }</div>
       <form onSubmit={(e) => updateHl(e)}>
-        <textarea className="mt-8 mb-6 p-1 w-full border-2 min-h-16"></textarea>
-        <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">OK</button>
+        <input type="text"
+          className="mt-8 border-2 w-16 p-1"
+          onChange={e => setCurrentYear(e.target.value)}
+          value={currentYear} />
+        <textarea
+          className="mt-4 mb-6 p-1 w-full border-2 min-h-32"
+          onChange={e => setCurrentHighlight(e.target.value)}>{currentHighlight}</textarea>
+        <button type="submit"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">OK</button>
       </form>
     </div>);
 }

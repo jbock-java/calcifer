@@ -8,17 +8,21 @@ interface Parameters {
 }
 
 interface WeekParameters {
+  highlight: Set<string>;
   week: Week;
 }
 
 interface DayParameters {
+  highlight: Set<string>;
   day: DataDay;
 }
 
 const grey = "text-slate-400";
 
 export const CalendarMonth: FC<Parameters> = ({ month }) => {
-  const year = useAppSelector(store => store.calendar.year);
+  const calendarData = useAppSelector(store => store.calendar.calendarData);
+  const year = calendarData.year;
+  const highlight = getHighlight(calendarData.highlight);
   const monthName = new Date(year, month.month.value() - 1, 15).toLocaleString('de', { month: 'long' });
   const classes = classNames(
     "font-mono",
@@ -39,17 +43,18 @@ export const CalendarMonth: FC<Parameters> = ({ month }) => {
         <div></div>
         <>{dayHeader}</>
         {month.weeks.map(week =>
-          <CalendarWeek key={'w-' + year + '-' + week.kw} week={week} />)}
+          <CalendarWeek key={'w-' + year + '-' + week.kw} week={week} highlight={highlight} />)}
       </div>
     </div>);
 }
 
-const CalendarWeek: FC<WeekParameters> = ({ week }) => {
-  const year = useAppSelector(store => store.calendar.year);
+const CalendarWeek: FC<WeekParameters> = ({ week, highlight }) => {
+  const calendarData = useAppSelector(store => store.calendar.calendarData);
+  const year = calendarData.year;
   const days = [];
   for (let i = 0; i < week.days.length; i++) {
     const key = year + '-' + week.kw + '-' + i;
-    days.push(<CalendarDay key={key} day={week.days[i]} />);
+    days.push(<CalendarDay key={key} day={week.days[i]} highlight={highlight} />);
   }
   return (
     <>
@@ -58,8 +63,7 @@ const CalendarWeek: FC<WeekParameters> = ({ week }) => {
     </>);
 }
 
-const CalendarDay: FC<DayParameters> = ({ day }) => {
-  const highlight = useAppSelector(store => store.calendar.highlight);
+const CalendarDay: FC<DayParameters> = ({ day, highlight }) => {
   if (!day.day) {
     return <div />
   }
@@ -72,3 +76,8 @@ const CalendarDay: FC<DayParameters> = ({ day }) => {
   const text = String(day.day?.dayOfMonth()).padStart(2, ' ');
   return <div className={classes}><pre>{text}</pre></div>
 }
+
+const getHighlight = (highlight: string) => {
+  const tokens = highlight.split(/\s+/);
+  return new Set(tokens);
+};
