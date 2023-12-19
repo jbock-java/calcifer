@@ -2,7 +2,6 @@ import classNames from "classnames";
 import { FC } from "react";
 import { DataDay, DataMonth, Week } from "../model/types";
 import { useAppSelector } from "../store/hooks";
-import { DayOfWeek } from "@js-joda/core";
 
 interface Parameters {
   month: DataMonth;
