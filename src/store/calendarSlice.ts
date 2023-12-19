@@ -2,12 +2,12 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 interface CalendarSlice {
   year: number;
-  highlight: string[];
+  highlight: Set<string>;
 }
 
 const initialState: CalendarSlice = {
   year: 2024,
-  highlight: ['2024-02-03', '2024-02-04'],
+  highlight: new Set(['2024-02-03', '2024-02-04']),
 };
 
 export const calendarSlice = createSlice({

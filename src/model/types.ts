@@ -1,8 +1,12 @@
-import { Month } from "@js-joda/core";
+import { LocalDate, Month } from "@js-joda/core";
+
+export interface DataDay {
+    day?: LocalDate;
+}
 
 export interface Week {
     kw: number;
-    days: string[];
+    days: DataDay[];
 }
 
 export interface DataMonth {

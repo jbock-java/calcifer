@@ -1,15 +1,17 @@
 import { DayOfWeek, LocalDate, Month } from "@js-joda/core";
 import { CalendarMonth } from "./cal/CalendarMonth";
-import { DataMonth, Week } from "./model/types";
+import { DataDay, DataMonth, Week } from "./model/types";
 import { useAppSelector } from "./store/hooks";
 
 export const App = () => {
   const year = useAppSelector(store => store.calendar.year);
   const months: DataMonth[] = createMonths(year);
   return (
-    <>{
-      months.map(month => (<CalendarMonth month={month} />))
-    }</>);
+    <div className="grid grid-cols-[auto_auto_auto] gap-x-12 gap-y-4 mx-4 my-2 place-content-start">{
+      months.map(month => <CalendarMonth
+        key={'m-' + year + '-' + month.month.value()}
+        month={month} />)
+    }</div>);
 }
 
 const createMonths = (year: number) => {
@@ -21,7 +23,7 @@ const createMonths = (year: number) => {
     result.push({ month, weeks });
     const lastWeek = weeks[weeks.length - 1];
     kw = lastWeek.kw;
-    if (lastWeek.days[lastWeek.days.length - 1]) {
+    if (lastWeek.days[lastWeek.days.length - 1].day) {
       kw++;
     }
   }
@@ -34,16 +36,16 @@ const createWeeks = (startKw: number, year: number, month: Month) => {
   let date = 1;
   let kw = startKw;
   while (true) {
-    const days: string[] = [];
+    const days: DataDay[] = [];
     const daysOfWeek = DayOfWeek.values();
     let anyDaysInWeek = false;
     for (const dayOfWeek of daysOfWeek) {
       if (daysInMonth.has(dayOfWeek.value() + "-" + date)) {
-        days.push(date.toString());
+        days.push({ day: LocalDate.of(year, month.value(), date) });
         date++;
         anyDaysInWeek = true;
       } else {
-        days.push("");
+        days.push({});
       }
     }
     if (anyDaysInWeek) {
