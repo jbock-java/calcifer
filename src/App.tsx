@@ -7,7 +7,7 @@ export const App = () => {
   const year = useAppSelector(store => store.calendar.year);
   const months: DataMonth[] = createMonths(year);
   return (
-    <div className="grid grid-cols-[auto_auto_auto] gap-x-12 gap-y-4 mx-4 my-2 place-content-start">{
+    <div className="grid grid-cols-[auto_auto_auto] gap-x-16 gap-y-8 mx-8 my-4 place-content-start">{
       months.map(month => <CalendarMonth
         key={'m-' + year + '-' + month.month.value()}
         month={month} />)
