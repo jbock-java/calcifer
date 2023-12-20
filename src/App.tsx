@@ -20,10 +20,12 @@ export const App = () => {
       highlight: currentHighlight
     }));
   }
+  const hl = getHighlight(highlight);
   return (
     <div className="mx-8 mt-4 mb-32">
       <div className="grid grid-cols-[auto_auto_auto] gap-x-16 gap-y-8 place-content-start">{
         months.map(month => <CalendarMonth
+          highlight={hl}
           key={'m-' + year + '-' + month.month.value()}
           month={month} />)
       }</div>
@@ -33,8 +35,9 @@ export const App = () => {
           onChange={e => setCurrentYear(e.target.value)}
           value={currentYear} />
         <textarea
-          className="mt-4 mb-6 p-1 w-full border-2 min-h-32"
-          onChange={e => setCurrentHighlight(e.target.value)}>{currentHighlight}</textarea>
+          className="mt-4 mb-6 p-1 w-full border-2 h-48"
+          onChange={e => setCurrentHighlight(e.target.value)}
+          value={currentHighlight} />
         <button type="submit"
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">OK</button>
       </form>
@@ -105,3 +108,21 @@ const getFirstKw = (year: number) => {
       return 1;
   }
 }
+
+const getHighlight = (highlight: string) => {
+  const result = new Set<string>();
+  const tokens = highlight.split(/\s+/);
+  for (const token of tokens) {
+    const [von, bis] = token.split("_");
+    result.add(von);
+    if (bis) {
+      let d = LocalDate.parse(von).plusDays(1);
+      const b = LocalDate.parse(bis);
+      while (!d.isAfter(b)) {
+        result.add(d.toString());
+        d = d.plusDays(1);
+      }
+    }
+  }
+  return result;
+};

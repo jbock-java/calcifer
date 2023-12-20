@@ -4,6 +4,7 @@ import { DataDay, DataMonth, Week } from "../model/types";
 import { useAppSelector } from "../store/hooks";
 
 interface Parameters {
+  highlight: Set<string>;
   month: DataMonth;
 }
 
@@ -19,10 +20,9 @@ interface DayParameters {
 
 const grey = "text-slate-400";
 
-export const CalendarMonth: FC<Parameters> = ({ month }) => {
+export const CalendarMonth: FC<Parameters> = ({ month, highlight }) => {
   const calendarData = useAppSelector(store => store.calendar.calendarData);
   const year = calendarData.year;
-  const highlight = getHighlight(calendarData.highlight);
   const monthName = new Date(year, month.month.value() - 1, 15).toLocaleString('de', { month: 'long' });
   const classes = classNames(
     "font-mono",
@@ -33,7 +33,7 @@ export const CalendarMonth: FC<Parameters> = ({ month }) => {
   );
   const dayHeader = [];
   for (const d of ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"]) {
-    dayHeader.push(<div className={classNames(grey, "justify-self-end")}>{d}</div>);
+    dayHeader.push(<div key={'hd-' + d} className={classNames(grey, "justify-self-end")}>{d}</div>);
   }
   return (
     <div>
@@ -76,8 +76,3 @@ const CalendarDay: FC<DayParameters> = ({ day, highlight }) => {
   const text = String(day.day?.dayOfMonth()).padStart(2, ' ');
   return <div className={classes}><pre>{text}</pre></div>
 }
-
-const getHighlight = (highlight: string) => {
-  const tokens = highlight.split(/\s+/);
-  return new Set(tokens);
-};
