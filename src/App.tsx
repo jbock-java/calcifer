@@ -1,5 +1,5 @@
 import { DayOfWeek, LocalDate, Month } from "@js-joda/core";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CalendarMonth } from "./cal/CalendarMonth";
 import { DataDay, DataMonth, Week } from "./model/types";
 import { calendarSlice } from "./store/calendarSlice";
@@ -12,13 +12,17 @@ export const App = () => {
   const highlight = calendarData.highlight;
   const [currentYear, setCurrentYear] = useState(String(year));
   const [currentHighlight, setCurrentHighlight] = useState(highlight);
+  useEffect(() => {
+    setCurrentHighlight(highlight);
+    setCurrentYear(String(year));
+  }, [year, highlight]);
   const dispatch = useAppDispatch();
   const months: DataMonth[] = createMonths(year);
   const updateHl = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(calendarSlice.actions.setCalendarData({
       year: Number(currentYear),
-      highlight: currentHighlight
+      highlight: currentHighlight,
     }));
   }
   const hl = getHighlight(highlight);
