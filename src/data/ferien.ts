@@ -1,5 +1,17 @@
-export const ferien = {
-    niedersachsen: {
+interface Jahre {
+    [jahr: string]: string[];
+}
+
+interface Laender {
+    [land: string]: Jahre;
+}
+
+export const getFerien = (land: string, jahr: string) => {
+    return ferien[land][jahr];
+}
+
+const ferien: Laender = {
+    'niedersachsen': {
         '2024': [
             '2024-01-01_2024-01-05',
             '2024-02-01_2024-02-02',

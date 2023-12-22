@@ -4,6 +4,7 @@ import { CalendarMonth } from "./cal/CalendarMonth";
 import { DataDay, DataMonth, Week } from "./model/types";
 import { calendarSlice } from "./store/calendarSlice";
 import { useAppDispatch, useAppSelector } from "./store/hooks";
+import Menu from "./component/Menu";
 
 export const App = () => {
   const calendarData = useAppSelector(store => store.calendar.calendarData);
@@ -23,6 +24,7 @@ export const App = () => {
   const hl = getHighlight(highlight);
   return (
     <div className="mx-8 mt-4 mb-32">
+      <Menu />
       <div className="grid grid-cols-[auto_auto_auto] gap-x-16 gap-y-8 place-content-start">{
         months.map(month => <CalendarMonth
           highlight={hl}
