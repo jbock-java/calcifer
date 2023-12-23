@@ -5,7 +5,7 @@ import { useAppDispatch } from "../store/hooks";
 
 export default function Menu() {
     const dispatch = useAppDispatch();
-    const classes = classNames("border border-black bg-white pl-2");
+    const classes = classNames("border border-black bg-white pl-2 mb-6");
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         if (!e.target.value) {
             return;
