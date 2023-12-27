@@ -5,6 +5,7 @@ import { DataDay, DataMonth, Week } from "./model/types";
 import { calendarSlice } from "./store/calendarSlice";
 import { useAppDispatch, useAppSelector } from "./store/hooks";
 import Menu from "./component/Menu";
+import DarkModeToggle from "./component/DarkModeToggle";
 
 export const App = () => {
   const calendarData = useAppSelector(store => store.calendar.calendarData);
@@ -27,26 +28,31 @@ export const App = () => {
   }
   const hl = getHighlight(highlight);
   return (
-    <div className="mx-8 mt-4 mb-32">
-      <Menu />
-      <div className="grid grid-cols-[auto_auto_auto] gap-x-16 gap-y-8 place-content-start">{
-        months.map(month => <CalendarMonth
-          highlight={hl}
-          key={'m-' + year + '-' + month.month.value()}
-          month={month} />)
-      }</div>
-      <form onSubmit={(e) => updateHl(e)}>
-        <input type="text"
-          className="mt-8 border-2 w-16 p-1"
-          onChange={e => setCurrentYear(e.target.value)}
-          value={currentYear} />
-        <textarea
-          className="mt-4 mb-6 p-1 w-full border-2 h-48"
-          onChange={e => setCurrentHighlight(e.target.value)}
-          value={currentHighlight} />
-        <button type="submit"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">OK</button>
-      </form>
+    <div className="">
+      <div className="mx-8 mt-4 mb-32">
+        <div className="flex gap-3">
+          <Menu />
+          <DarkModeToggle />
+        </div>
+        <div className="grid grid-cols-[auto_auto_auto] gap-x-16 gap-y-8 place-content-start">{
+          months.map(month => <CalendarMonth
+            highlight={hl}
+            key={'m-' + year + '-' + month.month.value()}
+            month={month} />)
+        }</div>
+        <form onSubmit={(e) => updateHl(e)}>
+          <input type="text"
+            className="mt-8 border-2 w-16 p-1 text-black bg-white dark:text-white dark:bg-black"
+            onChange={e => setCurrentYear(e.target.value)}
+            value={currentYear} />
+          <textarea
+            className="mt-4 mb-6 p-1 w-full border-2 h-48 text-black bg-white dark:text-white dark:bg-black"
+            onChange={e => setCurrentHighlight(e.target.value)}
+            value={currentHighlight} />
+          <button type="submit"
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">OK</button>
+        </form>
+      </div>
     </div>);
 }
 

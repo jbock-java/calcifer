@@ -25,6 +25,8 @@ export const CalendarMonth: FC<Parameters> = ({ month, highlight }) => {
   const year = calendarData.year;
   const monthName = new Date(year, month.month.value() - 1, 15).toLocaleString('de', { month: 'long' });
   const classes = classNames(
+    "text-black",
+    "dark:text-white",
     "font-mono",
     "w-fit",
     "grid",
@@ -72,6 +74,7 @@ const CalendarDay: FC<DayParameters> = ({ day, highlight }) => {
     "px-1",
     "justify-self-end",
     hl && "bg-yellow-300",
+    hl && "dark:bg-indigo-800",
   );
   const text = String(day.day?.dayOfMonth()).padStart(2, ' ');
   return <div className={classes}><pre>{text}</pre></div>
