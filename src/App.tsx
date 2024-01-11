@@ -9,9 +9,9 @@ import DarkModeToggle from "./component/DarkModeToggle";
 
 export const App = () => {
   const calendarData = useAppSelector(store => store.calendar.calendarData);
-  const year = calendarData.year;
+  const year = calendarData.year.substring(0, 4);
   const highlight = calendarData.highlight;
-  const [currentYear, setCurrentYear] = useState(String(year));
+  const [currentYear, setCurrentYear] = useState(year);
   const [currentHighlight, setCurrentHighlight] = useState(highlight);
   useEffect(() => {
     setCurrentHighlight(highlight);
@@ -22,7 +22,7 @@ export const App = () => {
   const updateHl = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(calendarSlice.actions.setCalendarData({
-      year: Number(currentYear),
+      year: currentYear,
       highlight: currentHighlight,
     }));
   }
@@ -56,7 +56,7 @@ export const App = () => {
     </div>);
 }
 
-const createMonths = (year: number) => {
+const createMonths = (year: string) => {
   let kw = getFirstKw(year);
   const months = Month.values();
   const result: DataMonth[] = [];
@@ -72,7 +72,7 @@ const createMonths = (year: number) => {
   return result;
 }
 
-const createWeeks = (startKw: number, year: number, month: Month) => {
+const createWeeks = (startKw: number, year: string, month: Month) => {
   const result: Week[] = [];
   const daysInMonth = getDaysInMonth(year, month);
   let date = 1;
@@ -83,7 +83,7 @@ const createWeeks = (startKw: number, year: number, month: Month) => {
     let anyDaysInWeek = false;
     for (const dayOfWeek of daysOfWeek) {
       if (daysInMonth.has(dayOfWeek.value() + "-" + date)) {
-        days.push({ day: LocalDate.of(year, month.value(), date) });
+        days.push({ day: LocalDate.of(Number(year), month.value(), date) });
         date++;
         anyDaysInWeek = true;
       } else {
@@ -99,9 +99,9 @@ const createWeeks = (startKw: number, year: number, month: Month) => {
   }
 }
 
-const getDaysInMonth = (year: number, month: Month) => {
+const getDaysInMonth = (year: string, month: Month) => {
   const result: Set<string> = new Set();
-  let d = LocalDate.of(year, month.value(), 1);
+  let d = LocalDate.of(Number(year), month.value(), 1);
   while (d.month() === month) {
     result.add(d.dayOfWeek().value() + "-" + d.dayOfMonth());
     d = d.plusDays(1);
@@ -109,8 +109,8 @@ const getDaysInMonth = (year: number, month: Month) => {
   return result;
 }
 
-const getFirstKw = (year: number) => {
-  const d = LocalDate.of(year, Month.JANUARY, 1);
+const getFirstKw = (year: string) => {
+  const d = LocalDate.of(Number(year), Month.JANUARY, 1);
   switch (d.dayOfWeek()) {
     case DayOfWeek.FRIDAY:
     case DayOfWeek.SATURDAY:

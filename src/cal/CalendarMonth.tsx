@@ -22,8 +22,8 @@ const grey = "text-slate-400";
 
 export const CalendarMonth: FC<Parameters> = ({ month, highlight }) => {
   const calendarData = useAppSelector(store => store.calendar.calendarData);
-  const year = calendarData.year;
-  const monthName = new Date(year, month.month.value() - 1, 15).toLocaleString('de', { month: 'long' });
+  const year = calendarData.year.substring(0, 4);
+  const monthName = new Date(Number(year), month.month.value() - 1, 15).toLocaleString('de', { month: 'long' });
   const classes = classNames(
     "text-black",
     "dark:text-white",

@@ -22,7 +22,7 @@ export default function Menu() {
             return;
         }
         dispatch(calendarSlice.actions.setCalendarData({
-            year: Number(e.target.value),
+            year: e.target.value,
             highlight: getFerien("niedersachsen", e.target.value).join("\n"),
         }));
     }
@@ -31,6 +31,7 @@ export default function Menu() {
         <select className={classes} onChange={handleChange}>
             <option className="p-1" value=""></option>
             <option className="p-1" value="2024">2024</option>
+            <option className="p-1" value="2024u">2024u</option>
             <option className="p-1" value="2025">2025</option>
         </select>
     );
