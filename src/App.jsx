@@ -7,25 +7,25 @@ import Menu from "./component/Menu.jsx"
 import DarkModeToggle from "./component/DarkModeToggle.jsx"
 
 export const App = () => {
-	const calendarData = useSelector(store => store.calendar.calendarData)
-	const year = calendarData.year.substring(0, 4)
-	const highlight = calendarData.highlight
-	const [currentYear, setCurrentYear] = useState(year)
-	const [currentHighlight, setCurrentHighlight] = useState(highlight)
+	let calendarData = useSelector(store => store.calendar.calendarData)
+	let year = calendarData.year.substring(0, 4)
+	let highlight = calendarData.highlight
+	let [currentYear, setCurrentYear] = useState(year)
+	let [currentHighlight, setCurrentHighlight] = useState(highlight)
 	useEffect(() => {
 		setCurrentHighlight(highlight)
 		setCurrentYear(String(year))
 	}, [year, highlight])
-	const dispatch = useDispatch()
-	const months = createMonths(year)
-	const updateHl = (e) => {
+	let dispatch = useDispatch()
+	let months = createMonths(year)
+	let updateHl = (e) => {
 		e.preventDefault()
 		dispatch(calendarSlice.actions.setCalendarData({
 			year: currentYear,
 			highlight: currentHighlight,
 		}))
 	}
-	const hl = getHighlight(highlight)
+	let hl = getHighlight(highlight)
 	return (
 		<div className="">
 			<div className="mx-8 mt-4 mb-32">
@@ -57,12 +57,12 @@ export const App = () => {
 
 const createMonths = (year) => {
 	let kw = getFirstKw(year)
-	const months = Month.values()
-	const result = []
-	for (const month of months) {
-		const weeks = createWeeks(kw, year, month)
+	let months = Month.values()
+	let result = []
+	for (let month of months) {
+		let weeks = createWeeks(kw, year, month)
 		result.push({ month, weeks })
-		const lastWeek = weeks[weeks.length - 1]
+		let lastWeek = weeks[weeks.length - 1]
 		kw = lastWeek.kw
 		if (lastWeek.days[lastWeek.days.length - 1].day) {
 			kw++
@@ -72,15 +72,15 @@ const createMonths = (year) => {
 }
 
 const createWeeks = (startKw, year, month) => {
-	const result = []
-	const daysInMonth = getDaysInMonth(year, month)
+	let result = []
+	let daysInMonth = getDaysInMonth(year, month)
 	let date = 1
 	let kw = startKw
 	while (true) {
-		const days = []
-		const daysOfWeek = DayOfWeek.values()
+		let days = []
+		let daysOfWeek = DayOfWeek.values()
 		let anyDaysInWeek = false
-		for (const dayOfWeek of daysOfWeek) {
+		for (let dayOfWeek of daysOfWeek) {
 			if (daysInMonth.has(dayOfWeek.value() + "-" + date)) {
 				days.push({ day: LocalDate.of(Number(year), month.value(), date) })
 				date++
@@ -99,7 +99,7 @@ const createWeeks = (startKw, year, month) => {
 }
 
 const getDaysInMonth = (year, month) => {
-	const result = new Set()
+	let result = new Set()
 	let d = LocalDate.of(Number(year), month.value(), 1)
 	while (d.month() === month) {
 		result.add(d.dayOfWeek().value() + "-" + d.dayOfMonth())
@@ -109,7 +109,7 @@ const getDaysInMonth = (year, month) => {
 }
 
 const getFirstKw = (year) => {
-	const d = LocalDate.of(Number(year), Month.JANUARY, 1)
+	let d = LocalDate.of(Number(year), Month.JANUARY, 1)
 	switch (d.dayOfWeek()) {
 		case DayOfWeek.FRIDAY:
 		case DayOfWeek.SATURDAY:
@@ -121,14 +121,14 @@ const getFirstKw = (year) => {
 }
 
 const getHighlight = (highlight) => {
-	const result = new Set()
-	const tokens = highlight.split(/\s+/)
-	for (const token of tokens) {
-		const [von, bis] = token.split("_")
+	let result = new Set()
+	let tokens = highlight.split(/\s+/)
+	for (let token of tokens) {
+		let [von, bis] = token.split("_")
 		result.add(von)
 		if (bis) {
 			let d = LocalDate.parse(von).plusDays(1)
-			const b = LocalDate.parse(bis)
+			let b = LocalDate.parse(bis)
 			while (!d.isAfter(b)) {
 				result.add(d.toString())
 				d = d.plusDays(1)
