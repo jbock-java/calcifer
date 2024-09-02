@@ -1,17 +1,19 @@
-import classNames from "classnames"
+import {
+  twJoin,
+} from "tailwind-merge"
 
 const grey = "text-slate-400"
 
-export const CalendarMonth = ({ year, month, highlight }) => {
+export const CalendarMonth = ({year, month, highlight}) => {
   const monthName = new Date(Number(year), month.month.value() - 1, 15).toLocaleString("de", { month: "long" })
-  const classes = classNames(
+  const classes = twJoin(
     "text-black",
     "dark:text-white",
     "font-mono",
     "w-fit",
     "grid",
     "gap-x-2",
-    "grid-cols-[auto_auto_auto_auto_auto_auto_auto_auto]",
+    "grid-cols-8",
   )
   return (
     <div>
@@ -20,7 +22,7 @@ export const CalendarMonth = ({ year, month, highlight }) => {
         <div className="col-span-7"><pre> {monthName} {year}</pre></div>
         <div></div>
         {["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"].map(d => (
-          <div key={"hd-" + d} className={classNames(grey, "justify-self-end")}>{d}</div>
+          <div key={"hd-" + d} className={twJoin(grey, "justify-self-end")}>{d}</div>
         ))}
         {month.weeks.map(week =>
           <CalendarWeek
@@ -48,7 +50,7 @@ const CalendarDay = ({ day, highlight }) => {
     return <div />
   }
   const hl = highlight.has(day.day.toString())
-  const classes = classNames(
+  const classes = twJoin(
     "px-1",
     "justify-self-end",
     hl && "bg-yellow-300",

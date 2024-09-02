@@ -1,7 +1,9 @@
-import classNames from "classnames"
 import {
   useEffect,
 } from "react"
+import {
+  twJoin,
+} from "tailwind-merge"
 import {
   create,
 } from "zustand"
@@ -28,7 +30,7 @@ export function DarkModeToggle() {
       document.documentElement.classList.remove("dark")
     }
   }, [value])
-  const classes = classNames(
+  const classes = twJoin(
     "p-1",
     "text-black",
     "dark:text-white",

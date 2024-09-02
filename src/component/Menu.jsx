@@ -1,4 +1,6 @@
-import classNames from "classnames"
+import {
+  twJoin,
+} from "tailwind-merge"
 import {
   getFerien,
 } from "../data/ferien"
@@ -30,7 +32,7 @@ export function Menu({setCalendarData}) {
       highlight: getFerien("niedersachsen", value).join("\n"),
     })
   }, [value, setCalendarData])
-  const classes = classNames(
+  const classes = twJoin(
     "p-1",
     "text-black",
     "dark:text-white",
