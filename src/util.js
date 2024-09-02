@@ -20,18 +20,22 @@ export const createMonths = (year) => {
   return result
 }
 
-const createWeeks = (startKw, year, month) => {
+// visible for testing
+export const createWeeks = (startKw, year, month) => {
   let result = []
   let daysInMonth = getDaysInMonth(year, month)
   let date = 1
   let kw = startKw
-  while (true) {
+  let anyDaysInWeek
+  do {
     let days = []
     let daysOfWeek = DayOfWeek.values()
-    let anyDaysInWeek = false
+    anyDaysInWeek = false
     for (let dayOfWeek of daysOfWeek) {
       if (daysInMonth.has(dayOfWeek.value() + "-" + date)) {
-        days.push({ day: LocalDate.of(Number(year), month.value(), date) })
+        days.push({
+          day: LocalDate.of(Number(year), month.value(), date)
+        })
         date++
         anyDaysInWeek = true
       } else {
@@ -39,12 +43,11 @@ const createWeeks = (startKw, year, month) => {
       }
     }
     if (anyDaysInWeek) {
-      result.push({ kw, days })
+      result.push({kw, days})
       kw++
-    } else {
-      return result
     }
-  }
+  } while (anyDaysInWeek)
+  return result
 }
 
 const getDaysInMonth = (year, month) => {
