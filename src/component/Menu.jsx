@@ -3,7 +3,7 @@ import {
 } from "tailwind-merge"
 import {
   getFerien,
-} from "../data/ferien"
+} from "../data/ferien.js"
 import {
   useEffect,
 } from "react"
@@ -29,7 +29,7 @@ export function Menu({setCalendarData}) {
   useEffect(() => {
     setCalendarData({
       year: value,
-      highlight: getFerien("niedersachsen", value).join("\n"),
+      highlight: getFerien("niedersachsen", value),
     })
   }, [value, setCalendarData])
   const classes = twJoin(

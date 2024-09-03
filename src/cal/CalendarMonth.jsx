@@ -33,7 +33,7 @@ export const CalendarMonth = ({year, month, highlight}) => {
     </div>)
 }
 
-const CalendarWeek = ({ year, week, highlight }) => {
+const CalendarWeek = ({year, week, highlight}) => {
   const days = []
   for (let i = 0; i < week.days.length; i++) {
     const key = year + "-" + week.kw + "-" + i
@@ -45,16 +45,21 @@ const CalendarWeek = ({ year, week, highlight }) => {
   </>
 }
 
-const CalendarDay = ({ day, highlight }) => {
+const colors = {
+  "s": "bg-yellow-300 dark:bg-indigo-800",
+  "*": "bg-green-300 dark:bg-green-700",
+  "+": "bg-violet-200 dark:bg-fuchsia-800",
+}
+
+const CalendarDay = ({day, highlight}) => {
   if (!day.day) {
     return <div />
   }
-  const hl = highlight.has(day.day.toString())
+  const color = highlight[day.day.toString()]
   const classes = twJoin(
     "px-1",
     "justify-self-end",
-    hl && "bg-yellow-300",
-    hl && "dark:bg-indigo-800",
+    color && colors[color],
   )
   const text = String(day.day?.dayOfMonth()).padStart(2, " ")
   return (
