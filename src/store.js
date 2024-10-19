@@ -14,9 +14,9 @@ const simpleColors = {
 }
 
 const colors = {
-  "s": "bg-yellow-300 dark:bg-indigo-800",
-  "*": "bg-green-300 dark:bg-green-700",
-  "+": "bg-violet-200 dark:bg-fuchsia-800",
+  "+": "bg-yellow-300 dark:bg-indigo-800",
+  "*": "bg-yellow-300 dark:bg-indigo-800",
+  "s": "bg-green-300 dark:bg-green-700",
 }
 
 export const useColorStore = create(persist(

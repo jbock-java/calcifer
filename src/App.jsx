@@ -47,7 +47,7 @@ export const App = () => {
         <input id="cb-explain" type="checkbox" checked={explain} onChange={e => {
           setExplain(e.target.checked)
         }} />
-        <label className="dark:text-white" htmlFor="cb-explain">Explain</label>
+        <label className="dark:text-white" htmlFor="cb-explain">Ferien</label>
       </div>
     </>
 }
