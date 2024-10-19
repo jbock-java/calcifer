@@ -1,10 +1,13 @@
 import {
   twJoin,
 } from "tailwind-merge"
+import {
+  useColorStore,
+} from "../store.js"
 
 const grey = "text-slate-400"
 
-export const CalendarMonth = ({year, month, highlight}) => {
+export function CalendarMonth({year, month, highlight}) {
   const monthName = new Date(Number(year), month.month.value() - 1, 15).toLocaleString("de", { month: "long" })
   const classes = twJoin(
     "text-black",
@@ -45,13 +48,8 @@ const CalendarWeek = ({year, week, highlight}) => {
   </>
 }
 
-const colors = {
-  "s": "bg-yellow-300 dark:bg-indigo-800",
-  "*": "bg-green-300 dark:bg-green-700",
-  "+": "bg-violet-200 dark:bg-fuchsia-800",
-}
-
-const CalendarDay = ({day, highlight}) => {
+function CalendarDay({day, highlight}) {
+  let colors = useColorStore(state => state.getColors())
   if (!day.day) {
     return <div />
   }

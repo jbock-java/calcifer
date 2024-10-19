@@ -40,7 +40,7 @@ export function DarkModeToggle() {
     "border-black",
     "dark:border-white",
     "pl-2",
-    "mb-6")
+  )
   const handleChange = (e) => {
     if (!e.target.value) {
       return

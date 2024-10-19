@@ -42,7 +42,6 @@ export function Menu({setCalendarData}) {
     "border-black",
     "dark:border-white",
     "pl-2",
-    "mb-6",
   )
 
   const handleChange = (e) => {

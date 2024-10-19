@@ -16,12 +16,17 @@ import {
 import {
   getHighlight,
 } from "./parse.js"
+import {
+  useColorStore,
+} from "./store.js"
 
 export const App = () => {
   let [calendarData, setCalendarData] = useState({
     year: "2024",
     highlight: ["02-03", "02-04", "03-01_03-10"],
   })
+  let setExplain = useColorStore(state => state.setExplain)
+  let explain = useColorStore(state => state.explain)
   let year = calendarData.year.substring(0, 4)
   let highlight = calendarData.highlight
   let months = createMonths(year)
@@ -36,9 +41,13 @@ export const App = () => {
             month={month} />)
         }</div>
       </div>
-      <div className="mt-24 flex gap-x-3 justify-center">
+      <div className="mt-24 flex gap-x-1 justify-center">
         <Menu setCalendarData={setCalendarData} />
         <DarkModeToggle />
+        <input id="cb-explain" type="checkbox" checked={explain} onChange={e => {
+          setExplain(e.target.checked)
+        }} />
+        <label className="dark:text-white" htmlFor="cb-explain">Explain</label>
       </div>
     </>
 }
