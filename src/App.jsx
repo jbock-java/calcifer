@@ -25,8 +25,8 @@ export const App = () => {
     year: "2024",
     highlight: ["02-03", "02-04", "03-01_03-10"],
   })
-  let setExplain = useColorStore(state => state.setExplain)
-  let explain = useColorStore(state => state.explain)
+  let setFerien = useColorStore(state => state.setFerien)
+  let ferien = useColorStore(state => state.ferien)
   let year = calendarData.year.substring(0, 4)
   let highlight = calendarData.highlight
   let months = createMonths(year)
@@ -44,10 +44,10 @@ export const App = () => {
       <div className="mt-24 flex gap-x-1 justify-center">
         <Menu setCalendarData={setCalendarData} />
         <DarkModeToggle />
-        <input id="cb-explain" type="checkbox" checked={explain} onChange={e => {
-          setExplain(e.target.checked)
+        <input id="cb-ferien" type="checkbox" checked={ferien} onChange={e => {
+          setFerien(e.target.checked)
         }} />
-        <label className="dark:text-white" htmlFor="cb-explain">Ferien</label>
+        <label className="dark:text-white" htmlFor="cb-ferien">Ferien</label>
       </div>
     </>
 }

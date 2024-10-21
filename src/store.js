@@ -10,24 +10,22 @@ import {
 
 const simpleColors = {
   "*": "bg-yellow-300 dark:bg-indigo-800",
-  "+": "bg-yellow-300 dark:bg-indigo-800",
 }
 
-const colors = {
-  "+": "bg-yellow-300 dark:bg-indigo-800",
+const ferienColors = {
   "*": "bg-yellow-300 dark:bg-indigo-800",
   "s": "bg-green-300 dark:bg-green-700",
 }
 
 export const useColorStore = create(persist(
   (set, get) => ({
-    explain: false,
+    ferien: false,
     getColors: () => {
-      return get().explain ? colors : simpleColors
+      return get().ferien ? ferienColors : simpleColors
     },
-    setExplain: (b) => {
+    setFerien: (b) => {
       set(produce(draft => {
-        draft.explain = b
+        draft.ferien = b
       }))
     },
   }), {
